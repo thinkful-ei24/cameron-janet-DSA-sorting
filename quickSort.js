@@ -16,6 +16,7 @@ function partition(array, start, end, counter) {
     if (array[i] <= pivot) {
       swap(array, i, j);
       j++;
+      counter += 1;
     }
     counter += 1;
   }
@@ -23,26 +24,47 @@ function partition(array, start, end, counter) {
   counter += 1;
   swap(array, end - 1, j);
  
-  return j;
+  // return j;
+
+  return {
+    middle:j,
+    counter:counter
+  }
 }
 
-function qSort(array, start = 0, end = array.length, counter = 0) {
+function qSort(array, start = 0, end = array.length, counter=0) {
+  let count = counter;
+  let middle;
+
   if (start >= end) {
-    counter += 1;
+    count += 1;
     return {
-      array: array
+      array: array,
+      counter: count
     };
   }
 
-  const middle = partition(array, start, end, counter);
+  const result = partition(array, start, end, count+1);
+  middle = result.middle;
+  count= result.counter;
 
-  array = qSort(array, start, middle, counter+1).array;
-  array = qSort(array, middle + 1, end, counter+1).array;
 
+  const leftresult= qSort(array, start, middle, count+1);
+  count = leftresult.counter;
+  array = leftresult.array;
+
+  const rightresult = qSort(array, middle + 1, end, count+1);
+  count =rightresult.counter;
+  array = rightresult.array;
+
+
+  console.log(count);
   return {
     array: array,
-    counter: counter
+    counter: count
   };
+
+
 }
 
 console.log(qSort(data));
