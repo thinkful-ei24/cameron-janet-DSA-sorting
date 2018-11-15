@@ -67,4 +67,9 @@ function qSort(array, start = 0, end = array.length, counter=0) {
 
 }
 
+
+const books = [ 'Harry Potter', 'The Lion the Witch', 'Wardrobe', 'Lord Of the Rings', 'Hitch Hikers Guide to the Galaxy'];
 console.log(qSort(data));
+
+console.log(qSort(books))
+
